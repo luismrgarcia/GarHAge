@@ -21,9 +21,10 @@ Best of all, if you select the proper parts, building and installing GarHAge req
 ### Table of Contents
 
 1. [Hardware](hardware.md)
-2. [Software](software.md)
-3. [Installing GarHAge](installing.md)
-4. [Configuring Home Assistant](configuringHA.md)
+1. [Software](software.md)
+1. [Installing GarHAge](installing.md)
+1. [GarHAge MQTT "API"](api.md)
+1. [Configuring Home Assistant](configuringHA.md)
 
 ### Contributing
 
