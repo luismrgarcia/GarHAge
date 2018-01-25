@@ -2,14 +2,21 @@
 ## a Home-Automation-friendly ESP8266-based MQTT Garage Door Controller
 
 GarHAge allows:
+
 - two "dumb" garage door openers to be controlled (open/close) and report garage door status (open/closed) via MQTT;
+
 - two auxiliary doors (e.g. a garage side-door and house-door) to report their status (open/closed) via MQTT;
+
 - garage temperature and humidity readings (via a DHT11 or 22) to be reported over MQTT.
 
 GarHAge is compatible with the following Home Assistant platforms: 
+
 - "MQTT Cover", responding to HA's open and close commands and reporting door status to keep HA's GUI in sync with the garage door state; 
+
 - "MQTT Binary Sensor", reporting door status to keep HA binary sensors for the auxiliary doors in sync with the door state; 
+
 - "MQTT Sensor", reporting temperature and humidity readings to keep HA sensors up-to-date.
+
 - "Template Cover", providing for control of garage door open/close only, and allowing the user to rely on a different means of reporting the door state in HA (e.g. a Zwave/ZigBee tilt sensor or similar).
 
 Complete HA configuration snippets and sample automations are provided to get your garage connected to HA as quickly and painlessly as possible, but GarHAge should also be compatible with any home automation software that can configure an MQTT cover, rollershutter, garage door, switch, or send commands over MQTT, including OpenHAB.
