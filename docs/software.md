@@ -4,9 +4,9 @@ GarHAge must be configured and compiled in the Arduino IDE. This section details
 
 ### Configuring Arduino IDE
 
-You will modify the configuration parameters, compile, and upload the sketch to the NodeMCU with the Arduino IDE.
+You will modify GarHAGe's configuration parameters, compile the sketch, and upload to the NodeMCU with the Arduino IDE.
 
-#### Download
+#### Download and Install
 
 Download the Arduino IDE for your platform from [here](https://www.arduino.cc/en/Main/Software) and install it.
 
@@ -16,7 +16,7 @@ Add support for the ESP8266 to the Arduino IDE by following the instructions und
 
 #### Libraries
 
-All of the following libraries must be added to the Arduino IDE in order to compile GarHAge, even if you are not planning to use DHT sensor support, due to the way that the IDE handles (or does not correctly handle) conditional includes. Follow the instructions for using the Library Manager [here](https://www.arduino.cc/en/Guide/Libraries#toc3), and search for and install the following libraries (some may already be installed):
+All of the following libraries must be added to the Arduino IDE in order to compile GarHAge, even if you are not planning to use DHT sensor support, due to the way that the IDE handles (or does not correctly handle) conditional includes. Follow the instructions for using the Library Manager [here](https://www.arduino.cc/en/Guide/Libraries#toc3), and search for and install the most up-to-date versions of the following libraries (some may already be installed):
 
 1. PubSubClient
 1. ESP8266mDNS
@@ -27,8 +27,9 @@ All of the following libraries must be added to the Arduino IDE in order to comp
 
 #### Selecting the NodeMCU / ESP8266
 
-1. You may need to install a driver for the NodeMCU for your OS - Google for instructions for your specific microcontroller and platform, install the driver if necessary, and restart the Arduino IDE.
-1. Select your board from `Tools - Boards` in the Arduino IDE (e.g. "NodeMCU 1.0 (ESP-12E Module)").
+You may need to install a driver for the NodeMCU for your OS - Google for instructions for your specific microcontroller and platform, install the driver if necessary, and restart the Arduino IDE. (Other ESP8266-based microcontrollers may also require os-specific drivers.)
+
+Select your board from **Tools -> Boards** in the Arduino IDE (e.g. "NodeMCU 1.0 (ESP-12E Module)").
 
 #### Loading the Sketch and Modifying `config.h` Parameters
 
@@ -42,13 +43,13 @@ _IMPORTANT: No modification of the sketch code in GarHAge.ino is necessary (or a
 
 #### Uploading the Sketch to your NodeMCU / ESP8266
 
-If using the NodeMCU, connect it to your computer via MicroUSB; press and hold the reset button on the NodeMCU, press and hold the Flash button on the NodeMCU, then release the Reset button. Select `Sketch - Upload` in the Arduino IDE.
+If using the NodeMCU, connect it to your computer via MicroUSB; press and hold the reset button on the NodeMCU, press and hold the Flash button on the NodeMCU, then release the Reset button. Select **Sketch -> Upload** in the Arduino IDE.
 
 If using a different ESP8266 microcontroller, follow that device's instructions for putting it into flashing/programming mode.
 
 #### Check the Arduino IDE Serial Monitor
 
-Open the Serial Monitor via `Tools - Serial Monitor`. Reset your microcontroller. If all is working correctly, you should see something similar to the following messages:
+Open the Serial Monitor via **Tools -> Serial Monitor**. Reset your microcontroller. If all is working correctly, you should see something similar to the following messages:
 
 ```
 Starting GarHAge...

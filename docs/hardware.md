@@ -2,7 +2,7 @@
 
 GarHAge can be built to support:
 1. Up to two overhead garage doors (requiring a relay and reed/magnetic switch per door)
-1. Up to two auxiliary doors (requiring a reed/magnetic switch per door)
+1. Up to two auxiliary doors (requiring a reed/magnetic switch per auxiliary door)
 1. Temperature and humidity readings (requiring a DHT11 or 22 sensor) 
 
 ### Bill of Materials
@@ -58,7 +58,7 @@ If using a normally-closed switch, be sure to set the relevant configuration par
 
 GarHAge can provide temperature and humidity readings from your garage via an attached DHT11 or 22, defaulting to DHT11 sensor support. 
 
-However, the DHT22 is recommended as it is usually only slightly more expensive, is more accurate, and has a wider measurement range. If using a DHT22, be sure to set the relevant configuration parameter in `config.h`.
+However, I recommend the DHT22 as it is usually only slightly more expensive, is more accurate, and has a wider measurement range. In particular, if where you live experiences sub-zero temperatures, you should use the DHT22 as the DHT11 measures down only to 0 degrees celsius. If using a DHT22, be sure to set the relevant configuration parameter in `config.h`.
 
 #### 5. 5v MicroUSB power supply
 
