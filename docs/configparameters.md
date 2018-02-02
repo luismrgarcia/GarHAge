@@ -190,7 +190,7 @@ The topic GarHAge will subscribe to to receive the `STATE` command for the DHT. 
 
 `MQTT_DHT_STATUS_TOPIC "garage/dht/status"`
 
-The topic base that GarHAge will publish temperature and humidity readings to at the subtopics `/temperatureC`, `/temperatureF`, and `/humidity`. Must be placed within quotation marks. _(Default: garage/dht/status)_
+The topic base that GarHAge will publish temperature and humidity readings to at the subtopics `/temperature`, and `/humidity`. Must be placed within quotation marks. _(Default: garage/dht/status)_
 
 `#define DHT_PUBLISH_INTERVAL 300`
 
