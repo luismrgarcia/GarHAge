@@ -111,6 +111,9 @@ const char* lwtMessage = "offline";
 
 const boolean discoveryEnabled = HA_MQTT_DISCOVERY;
 String discoveryPrefix = HA_MQTT_DISCOVERY_PREFIX;
+String discoveryConfigSuffix = "/discovery";
+String discoveryConfigTopicStr = availabilityBase + discoveryConfigSuffix;
+const char* discoveryConfigTopic = discoveryConfigTopicStr.c_str();
 
 WiFiClient espClient;
 PubSubClient client(espClient);
@@ -568,6 +571,11 @@ void triggerDoorAction(String requestedDoor, String requestedAction) {
     dht_read_publish();
   }
 
+  else if (requestedDoor == discoveryConfigTopic && requestedAction == "STATE") {
+    Serial.print("Publishing on-demand MQTT Discovery payloads!")
+    publish_ha_mqtt_discovery();
+  }
+
   else { 
     Serial.println("Unrecognized action payload... taking no action!");
   }
@@ -670,7 +678,7 @@ void publish_ha_mqtt_discovery_door1() {
   // Publish payload
   Serial.print("Publishing MQTT Discovery payload for ");
   Serial.print(door1_alias);
-  Serial.print(" ...");
+  Serial.println("...");
   client.publish(topic, payload, false);
 
 }
@@ -708,17 +716,18 @@ void publish_ha_mqtt_discovery_door2() {
   // Publish payload
   Serial.print("Publishing MQTT Discovery payload for ");
   Serial.print(door2_alias);
-  Serial.print(" ...");
+  Serial.println("...");
   client.publish(topic, payload, false);
 
 }
 
 void publish_ha_mqtt_discovery_auxdoor1() {
-  const size_t bufferSize = JSON_OBJECT_SIZE(8);
+  const size_t bufferSize = JSON_OBJECT_SIZE(9);
   DynamicJsonBuffer jsonBuffer(bufferSize);
 
   JsonObject& root = jsonBuffer.createObject();
   root["name"] = aux_door1_alias;
+  root["state_topic"] = mqtt_aux_door1_status_topic;
   root["payload_on"] = "open";
   root["payload_off"] = "closed";
   root["availability_topic"] = availabilityTopic;
@@ -741,17 +750,18 @@ void publish_ha_mqtt_discovery_auxdoor1() {
   // Publish payload
   Serial.print("Publishing MQTT Discovery payload for ");
   Serial.print(aux_door1_alias);
-  Serial.print(" ...");
+  Serial.println("...");
   client.publish(topic, payload, false);
 
 }
 
 void publish_ha_mqtt_discovery_auxdoor2() {
-  const size_t bufferSize = JSON_OBJECT_SIZE(8);
+  const size_t bufferSize = JSON_OBJECT_SIZE(9);
   DynamicJsonBuffer jsonBuffer(bufferSize);
 
   JsonObject& root = jsonBuffer.createObject();
   root["name"] = aux_door2_alias;
+  root["state_topic"] = mqtt_aux_door2_status_topic;
   root["payload_on"] = "open";
   root["payload_off"] = "closed";
   root["availability_topic"] = availabilityTopic;
@@ -774,7 +784,7 @@ void publish_ha_mqtt_discovery_auxdoor2() {
   // Publish payload
   Serial.print("Publishing MQTT Discovery payload for ");
   Serial.print(aux_door2_alias);
-  Serial.print(" ...");
+  Serial.println("...");
   client.publish(topic, payload, false);
 
 }
@@ -784,11 +794,12 @@ void publish_ha_mqtt_discovery_temperature() {
   DynamicJsonBuffer jsonBuffer(bufferSize);
 
   boolean celsius = DHT_TEMPERATURE_CELSIUS;
+  String uom = "";
   if (celsius) {
-    String uom = "°C";
+    uom = "°C";
   }
   else {
-    String uom = "°F";
+    uom = "°F";
   }
 
   String alias = DHT_TEMPERATURE_ALIAS;
@@ -816,7 +827,7 @@ void publish_ha_mqtt_discovery_temperature() {
   // Publish payload
   Serial.print("Publishing MQTT Discovery payload for ");
   Serial.print(alias);
-  Serial.print(" ...");
+  Serial.println("...");
   client.publish(topic, payload, false);
 
 }
@@ -850,7 +861,7 @@ void publish_ha_mqtt_discovery_humidity() {
   // Publish payload
   Serial.print("Publishing MQTT Discovery payload for ");
   Serial.print(alias);
-  Serial.print(" ...");
+  Serial.println("...");
   client.publish(topic, payload, false);
 
 }
@@ -865,8 +876,13 @@ void reconnect() {
     if (client.connect(mqtt_clientId, mqtt_username, mqtt_password, availabilityTopic, 0, true, lwtMessage)) {
       Serial.println("Connected!");
 
+      // Subscribe to MQTT discovery config topic to listen for STATE payload
       // Publish disovery payloads before other messages so that entities are created first
       if (discoveryEnabled) {
+      Serial.print("Subscribing to ");
+      Serial.print(discoveryConfigTopic);
+      Serial.println("...");
+      client.subscribe(discoveryConfigTopic);
       publish_ha_mqtt_discovery();
       }
 
