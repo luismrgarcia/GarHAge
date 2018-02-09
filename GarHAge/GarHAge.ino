@@ -14,6 +14,8 @@
 #include <Adafruit_Sensor.h>
 #include "config.h"
 
+const char* garhageVersion = "2.0.0";
+
 // Mapping NodeMCU Ports to Arduino GPIO Pins
 // Allows use of NodeMCU Port nomenclature in config.h
 #define D0 16
@@ -1007,7 +1009,9 @@ void setup() {
   // Setup serial output, connect to wifi, connect to MQTT broker, set MQTT message callback
   Serial.begin(115200);
 
-  Serial.println("Starting GarHAge...");
+  Serial.print("GarHAge version ");
+  Serial.print(garhageVersion);
+  Serial.println(" starting...");
 
   if (activeHighRelay) {
     Serial.println("Relay mode: Active-High");
